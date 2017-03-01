@@ -2,6 +2,7 @@ module FarMar
 
   class Vendor
     attr_reader
+    
     def initialize
     end
 
@@ -19,6 +20,14 @@ module FarMar
 
     def revenue
       #returns the the sum of all of the vendor's sales (in cents)
+    end
+
+    def self.all
+      #returns a collection of instances, representing all of the objects described in the CSV
+    end
+
+    def self.find(id)
+      #returns an instance of the object where the value of the id field in the CSV matches the passed parameter
     end
 
     def self.by_market(market_id)
