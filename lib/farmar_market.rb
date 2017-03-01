@@ -5,6 +5,9 @@ module FarMar
     def initialize
     end
 
+    def vendors
+      #returns a collection of FarMar::Vendor instances that are associated with the market by the market_id field.
+    end
 
   end
 
