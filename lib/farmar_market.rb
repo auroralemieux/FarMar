@@ -41,13 +41,16 @@ module FarMar
     end
 
     def self.find(find_this_id)
-      #returns an instance of the object where the value of the id field in the CSV matches the passed parameter
+      raise ArgumentError.new "argument must be integer" unless find_this_id.class == Integer
+
       all_markets = FarMar::Market.all
       answer = nil
       all_markets.each do |market|
         answer = market if market.id.to_i == find_this_id.to_i
       end
+
       raise ArgumentError.new "That market id doesn't exist!" if answer == nil
+
       return answer
     end
 
@@ -70,8 +73,9 @@ end
 # id_two = FarMar::Market.find(2)
 # puts id_two.name
 
-
-
+# market = FarMar::Market.new({id: 1,name: "People's Co-op Farmers Market",address: "30th and Burnside",city: "Portland",county: "Multnomah",state: "Oregon",zip: "97202"})
+#
+# puts market.vendors
 # ID - (Fixnum) a unique identifier for that market
 # Name - (String) the name of the market (not guaranteed unique)
 # Address - (String) street address of the market
