@@ -1,4 +1,5 @@
 require 'csv'
+# require_relative 'farmar_vendor'
 
 module FarMar
 
@@ -52,29 +53,24 @@ module FarMar
 
     def vendors
       #returns a collection of FarMar::Vendor instances that are associated with the market by the market_id field.
+      all_vendors = FarMar::Vendor.all
+      associated_vendors = []
+      all_vendors.each do |vendor|
+        associated_vendors << vendor if vendor.market_id == @id
+      end
+      return associated_vendors
 
-      # my_file = CSV.open("support/account_owners.csv")
-      # owners_and_accounts = []
-      # my_file.each do |line|
-      #   association = {}
-      #   association[:account_id] = line[0]
-      #   association[:owner_id] = line[1]
-      #   owners_and_accounts << association
-      # end
-      # answer = nil
-      # owners_and_accounts.each do |association|
-      #   answer = association[:owner_id] if association[:account_id].to_i == account_id.to_i
-      # end
-      # return answer.to_i
     end
 
   end
 
 end
-# 
+#
 # puts FarMar::Market.all
 # id_two = FarMar::Market.find(2)
 # puts id_two.name
+
+
 
 # ID - (Fixnum) a unique identifier for that market
 # Name - (String) the name of the market (not guaranteed unique)
