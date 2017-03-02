@@ -7,6 +7,7 @@ module FarMar
     attr_reader :id, :name, :address, :city, :county, :state, :zip
 
     def initialize(data_hash)
+      raise ArgumentError.new "input must be hash" if data_hash.class != Hash
       @id = data_hash[:id]
       @name = data_hash[:name]
       @address = data_hash[:address]

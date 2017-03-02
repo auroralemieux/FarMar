@@ -9,7 +9,10 @@ describe "FarMar::Market class" do
 
   describe "initialize" do
     it "raises an error if passed a non hash object" do
-
+      wrong_objects = [3, "string", [], nil]
+      wrong_objects.each do |object|
+        proc{FarMar::Market.new(object)}.must_raise ArgumentError
+      end
     end
   end
 

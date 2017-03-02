@@ -6,6 +6,8 @@ module FarMar
     attr_reader :id, :name, :vendor_id
 
     def initialize(data_hash)
+      raise ArgumentError.new "input must be hash" if data_hash.class != Hash
+
       @id = data_hash[:id]
       @name = data_hash[:name]
       @vendor_id = data_hash[:vendor_id]
@@ -32,6 +34,7 @@ module FarMar
     end
 
     def self.find(find_this_id)
+      raise ArgumentError.new "argument must be integer" unless find_this_id.class == Integer
       #returns an instance of the object where the value of the id field in the CSV matches the passed parameter
       all_products = FarMar::Product.all
       answer = nil
@@ -85,9 +88,7 @@ module FarMar
 
 end
 
-# puts FarMar::Product.all
-# second_product = FarMar::Product.find(2)
-# puts second_product.name
+
 # ID - (Fixnum) uniquely identifies the product
 # Name - (String) the name of the product (not guaranteed unique)
 # Vendor_id - (Fixnum) a reference to which vendor sells this product

@@ -6,8 +6,10 @@ module FarMar
     attr_reader :id, :amount, :purchase_time, :vendor_id, :product_id
 
     def initialize(data_hash)
+      raise ArgumentError.new "input must be hash" if data_hash.class != Hash
+
       @id = data_hash[:id]
-      @amount = data_hash[:amount]
+      @amount = data_hash[:amount].to_i
       @purchase_time = data_hash[:purchase_time]
       @vendor_id = data_hash[:vendor_id]
       @product_id = data_hash[:product_id]
@@ -49,6 +51,7 @@ module FarMar
     end
 
     def self.find(find_this_id)
+      raise ArgumentError.new "argument must be integer" unless find_this_id.class == Integer
       #returns an instance of the object where the value of the id field in the CSV matches the passed parameter
       all_sales = FarMar::Sale.all
       answer = nil
@@ -64,9 +67,7 @@ module FarMar
 end
 #
 
-# puts FarMar::Sale.all
-# second_sale = FarMar::Sale.find(2)
-# puts second_sale.amount
+
 # ID - (Fixnum) uniquely identifies the sale
 # Amount - (Fixnum) the amount of the transaction, in cents (i.e., 150 would be $1.50)
 # Purchase_time - (Datetime) when the sale was completed
