@@ -42,20 +42,43 @@ module FarMar
       return answer
     end
 
-    def self.between(beginning_time,end_time)
-      #returns a collection of FarMar::Sale objects where the purchase time is between the two times given as arguments
+    def self.by_vendor(vendor_id_to_find)
+      #returns all of the products with the given vendor_id
+      all_products = FarMar::Product.all
+      associated_vendors = []
+      all_products.each do |product|
+        associated_vendors << product if product.vendor_id == vendor_id_to_find
+      end
+      raise ArgumentError.new "no products found matching that vendor id" if associated_vendors.empty?
+      return associated_vendors
     end
 
     def vendor
       #returns the FarMar::Vendor instance that is associated with this product using the FarMar::Product vendor_id field
+      all_vendors = FarMar::Vendor.all
+      answer = nil
+      all_vendors.each do |vendor|
+        answer = vendor if vendor.id == @vendor_id
+      end
+      raise ArgumentError.new "no vendor found" if answer == nil
+      return answer
+
     end
 
     def sales
       #returns a collection of FarMar::Sale instances that are associated using the FarMar::Sale product_id field.
+      all_sales = FarMar::Sale.all
+      associated_sales = []
+      all_vendors.each do |sale|
+        associated_sales << sale if sale.product_id == @id
+      end
+      raise ArgumentError.new "no sales found" if associated_sales.empty?
+      return associated_sales
     end
 
     def number_of_sales
       #returns the number of times this product has been sold.
+      return sales.length
     end
 
   end
