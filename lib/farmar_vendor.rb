@@ -30,7 +30,7 @@ module FarMar
 
     def self.all
       #returns a collection of instances, representing all of the objects described in the CSV
-      my_file = CSV.open("../support/vendors.csv")
+      my_file = CSV.open("support/vendors.csv")
       all_vendor_info = []
       my_file.each do |line|
         vendor_hash = {}
@@ -69,9 +69,9 @@ module FarMar
   end
 
 end
-puts FarMar::Vendor.all
-second_vendor = FarMar::Vendor.find(2)
-puts second_vendor.name
+# puts FarMar::Vendor.all
+# second_vendor = FarMar::Vendor.find(2)
+# puts second_vendor.name
 
 # ID - (Fixnum) uniquely identifies the vendor
 # Name - (String) the name of the vendor (not guaranteed unique)

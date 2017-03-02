@@ -27,7 +27,7 @@ module FarMar
 
     def self.all
       #returns a collection of instances, representing all of the objects described in the CSV
-      my_file = CSV.open("../support/sales.csv")
+      my_file = CSV.open("support/sales.csv")
       all_sale_info = []
       my_file.each do |line|
         sale_hash = {}
