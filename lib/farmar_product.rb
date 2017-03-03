@@ -8,9 +8,9 @@ module FarMar
     def initialize(data_hash)
       raise ArgumentError.new "input must be hash" if data_hash.class != Hash
 
-      @id = data_hash[:id]
+      @id = data_hash[:id].to_i
       @name = data_hash[:name]
-      @vendor_id = data_hash[:vendor_id]
+      @vendor_id = data_hash[:vendor_id].to_i
     end
 
     def self.all
@@ -46,14 +46,18 @@ module FarMar
     end
 
     def self.by_vendor(vendor_id_to_find)
+      raise ArgumentError.new "arg must be integer" if vendor_id_to_find.class != Integer
       #returns all of the products with the given vendor_id
       all_products = FarMar::Product.all
-      associated_vendors = []
+      # puts all_products.length
+      associated_products = []
       all_products.each do |product|
-        associated_vendors << product if product.vendor_id == vendor_id_to_find
+        if product.vendor_id == vendor_id_to_find
+          associated_products << product
+        end
       end
-      raise ArgumentError.new "no products found matching that vendor id" if associated_vendors.empty?
-      return associated_vendors
+      raise ArgumentError.new "no products found matching that vendor id" if associated_products.empty?
+      return associated_products
     end
 
     def vendor
@@ -72,7 +76,7 @@ module FarMar
       #returns a collection of FarMar::Sale instances that are associated using the FarMar::Sale product_id field.
       all_sales = FarMar::Sale.all
       associated_sales = []
-      all_vendors.each do |sale|
+      all_sales.each do |sale|
         associated_sales << sale if sale.product_id == @id
       end
       raise ArgumentError.new "no sales found" if associated_sales.empty?

@@ -8,7 +8,7 @@ module FarMar
     def initialize(data_hash)
       raise ArgumentError.new "input must be hash" if data_hash.class != Hash
 
-      @id = data_hash[:id]
+      @id = data_hash[:id].to_i
       @name = data_hash[:name]
       @num_of_employees = data_hash[:num_of_employees]
       @market_id = data_hash[:market_id]

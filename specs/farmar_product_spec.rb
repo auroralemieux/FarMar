@@ -61,34 +61,92 @@ describe "FarMar::Product class" do
 
   end
 
-  describe "self.between" do
+  describe "self.by_vendor" do
 
-    it "" do
-
+    it "raise arg error if passed in non-integer" do
+      wrong_objects = [{}, "string", [], nil]
+      wrong_objects.each do |object|
+        proc{FarMar::Product.by_vendor(object)}.must_raise ArgumentError
+      end
     end
 
+    it "returns an array" do
+      FarMar::Product.by_vendor(100).must_be_kind_of Array
+    end
+
+    it "each element in the array is a Product object" do
+      all_associated_vendors = FarMar::Product.by_vendor(4)
+      all_associated_vendors.each do |vendor|
+        vendor.must_be_instance_of FarMar::Product
+      end
+    end
+
+    it "each element in the array has the same vendor_id as was passed in" do
+      test_id = 10
+      associated_products = FarMar::Product.by_vendor(test_id)
+      associated_products.each do |product|
+        product.vendor_id.must_equal test_id
+      end
+    end
   end
 
   describe "vendor" do
 
-    it "" do
+    it "returns a Vendor object" do
+      FarMar::Product.new({id: 1, name: "Dry Beets", vendor_id: 1}).vendor.must_be_instance_of FarMar::Vendor
+    end
 
+    it "Vendor id matches current Product vendor_id" do
+      product = FarMar::Product.new({id: 1, name: "Dry Beets", vendor_id: 1})
+      vendor = product.vendor
+      vendor.id.must_equal product.vendor_id
+    end
+
+    it "raise error if no vendor found" do
+      proc {FarMar::Product.new({id: 1, name: "Dry Beets", vendor_id: -1}).vendor}.must_raise ArgumentError
     end
 
   end
 
   describe "sales" do
 
-    it "" do
+    it "returns an array" do
+      FarMar::Product.new({id: 1, name: "Dry Beets", vendor_id: 1}).sales.must_be_kind_of Array
+    end
 
+    it "array must contain Sale objects" do
+      product = FarMar::Product.new({id: 1, name: "Dry Beets", vendor_id: 1})
+      sales = product.sales
+      sales.each do |sale|
+        sale.must_be_instance_of FarMar::Sale
+      end
+    end
+
+    it "each sale object must have the product_id matching the current Product object" do
+      product = FarMar::Product.new({id: 1, name: "Dry Beets", vendor_id: 1})
+      sales = product.sales
+      sales.each do |sale|
+        sale.product_id.must_equal 1
+      end
+    end
+
+    it "raise arg error if no sales found" do
+      proc {FarMar::Product.new({id: -1, name: "Dry Beets", vendor_id: 1}).sales}.must_raise ArgumentError
     end
 
   end
 
   describe "number_of_sales" do
 
-    it "" do
+    it "returns an integer" do
+      FarMar::Product.new({id: 1, name: "Dry Beets", vendor_id: 1}).number_of_sales.must_be_kind_of Integer
+    end
 
+    it "finds all sales associated with a product" do
+      product = FarMar::Product.new({id: 1, name: "Dry Beets", vendor_id: 1})
+      all_sales = product.sales
+      all_sales.length.must_equal 7
+      product.number_of_sales.must_equal 7
     end
 
   end

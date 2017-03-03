@@ -12,7 +12,7 @@ module FarMar
       @amount = data_hash[:amount].to_i
       @purchase_time = data_hash[:purchase_time]
       @vendor_id = data_hash[:vendor_id]
-      @product_id = data_hash[:product_id]
+      @product_id = data_hash[:product_id].to_i
     end
 
     def vendor
