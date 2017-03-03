@@ -59,20 +59,20 @@ describe "FarMar::Sale class" do
 
     it "given an id, finds the sale object that has that id" do
       test_sale = FarMar::Sale.find(2)
-      test_sale.amount.must_equal 2262
+      test_sale.amount.must_equal 22.62
     end
 
   end
 
   describe "vendor" do
     it "raises arg error if no vendor found" do
-      proc {FarMar::Sale.new({id: 1, amount: 9290, purchase_time: "2013-11-07 04:34:56 -0800", vendor_id: -1, product_id: 1}).vendor}.must_raise ArgumentError
+      proc {FarMar::Sale.new({id: 1, amount: 92.90, purchase_time: "2013-11-07 04:34:56 -0800", vendor_id: -1, product_id: 1}).vendor}.must_raise ArgumentError
     end
     it "returns a Vendor object" do
-      FarMar::Sale.new({id: 1, amount: 9290, purchase_time: "2013-11-07 04:34:56 -0800", vendor_id: 1, product_id: 1}).vendor.must_be_instance_of FarMar::Vendor
+      FarMar::Sale.new({id: 1, amount: 92.90, purchase_time: "2013-11-07 04:34:56 -0800", vendor_id: 1, product_id: 1}).vendor.must_be_instance_of FarMar::Vendor
     end
     it "Vendor object id matches current Sales id" do
-      sale = FarMar::Sale.new({id: 1, amount: 9290, purchase_time: "2013-11-07 04:34:56 -0800", vendor_id: 1, product_id: 1})
+      sale = FarMar::Sale.new({id: 1, amount: 92.90, purchase_time: "2013-11-07 04:34:56 -0800", vendor_id: 1, product_id: 1})
       vendor = sale.vendor
       vendor.id.must_equal sale.vendor_id
     end
@@ -80,13 +80,13 @@ describe "FarMar::Sale class" do
 
   describe "product" do
     it "raises arg error if no product found" do
-      proc {FarMar::Sale.new({id: 1, amount: 9290, purchase_time: "2013-11-07 04:34:56 -0800", vendor_id: 1, product_id: -1}).product}.must_raise ArgumentError
+      proc {FarMar::Sale.new({id: 1, amount: 92.90, purchase_time: "2013-11-07 04:34:56 -0800", vendor_id: 1, product_id: -1}).product}.must_raise ArgumentError
     end
     it "returns a Product object" do
-      FarMar::Sale.new({id: 1, amount: 9290, purchase_time: "2013-11-07 04:34:56 -0800", vendor_id: 1, product_id: 1}).product.must_be_instance_of FarMar::Product
+      FarMar::Sale.new({id: 1, amount: 92.90, purchase_time: "2013-11-07 04:34:56 -0800", vendor_id: 1, product_id: 1}).product.must_be_instance_of FarMar::Product
     end
     it "Vendor object id matches current Sales id" do
-      sale = FarMar::Sale.new({id: 1, amount: 9290, purchase_time: "2013-11-07 04:34:56 -0800", vendor_id: 1, product_id: 1})
+      sale = FarMar::Sale.new({id: 1, amount: 92.90, purchase_time: "2013-11-07 04:34:56 -0800", vendor_id: 1, product_id: 1})
       product = sale.product
       product.id.must_equal sale.product_id
     end

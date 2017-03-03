@@ -63,19 +63,42 @@ describe "FarMar::Vendor class" do
   end
 
   describe "market" do
-    it "" do
-
+    it "raises error if no id matches" do
+      vendor = FarMar::Vendor.new({id: -14,name: "Stracke Group", num_of_employees: 2, market_id: -1})
+      proc {vendor.market}.must_raise ArgumentError
     end
   end
 
   describe "products" do
-    it "" do
+    it "returns an array" do
+      vendor = FarMar::Vendor.new({id: 14,name: "Stracke Group", num_of_employees: 2, market_id: 4})
+      vendor.products.must_be_kind_of Array
+    end
+
+    it "objects in array are Products" do
+      vendor = FarMar::Vendor.new({id: 14, name: "Stracke Group", num_of_employees: 2, market_id: 4})
+      related_products = vendor.products
+      related_products.each do |product|
+        product.must_be_instance_of FarMar::Product
+      end
 
     end
+
   end
 
   describe "sales" do
-    it "" do
+    it "returns an array" do
+      vendor = FarMar::Vendor.new({id: 14,name: "Stracke Group", num_of_employees: 2, market_id: 4})
+      vendor.sales.must_be_kind_of Array
+    end
+
+    it "objects in array are Sales" do
+      skip
+      vendor = FarMar::Vendor.new({id: 14, name: "Stracke Group", num_of_employees: 2, market_id: 4})
+      related_sales = vendor.sales
+      related_sales.each do |sale|
+        sale.must_be_instance_of FarMar::Sale
+      end
 
     end
   end

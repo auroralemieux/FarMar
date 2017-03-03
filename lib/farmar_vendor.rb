@@ -15,19 +15,26 @@ module FarMar
     end
 
     def market
+      answer = Market.find(@market_id)
+
+      raise ArgumentError.new "no market found" if answer == nil
       #returns the FarMar::Market instance that is associated with this vendor using the FarMar::Vendor market_id field
     end
 
     def products
+
+      Product.all.select { |product| product.vendor_id == @id }
       #returns a collection of FarMar::Product instances that are associated by the FarMar::Product vendor_id field.
     end
 
     def sales
+      Sale.all.select { |sale| sale.vendor_id == @id }
       #returns a collection of FarMar::Sale instances that are associated by the vendor_id field.
     end
 
     def revenue
       #returns the the sum of all of the vendor's sales (in cents)
+      return sales.map {|sale| sale.amount}.inject(:+)
     end
 
     def self.all

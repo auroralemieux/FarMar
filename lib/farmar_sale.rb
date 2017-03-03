@@ -10,7 +10,7 @@ module FarMar
       raise ArgumentError.new "input must be hash" if data_hash.class != Hash
 
       @id = data_hash[:id]
-      @amount = data_hash[:amount].to_i
+      @amount = data_hash[:amount].to_f/100.round(2)
       @purchase_time = data_hash[:purchase_time]
       @vendor_id = data_hash[:vendor_id]
       @product_id = data_hash[:product_id].to_i
