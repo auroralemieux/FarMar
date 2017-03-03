@@ -1,4 +1,5 @@
 require 'csv'
+require 'date'
 
 module FarMar
 
@@ -16,15 +17,39 @@ module FarMar
     end
 
     def vendor
+      all_vendors = FarMar::Vendor.all
+      answer = nil
+      all_vendors.each do |vendor|
+        answer = vendor if vendor.id == @vendor_id
+      end
+      raise ArgumentError.new "no vendor found" if answer == nil
+      return answer
       #returns the FarMar::Vendor instance that is associated with this sale using the FarMar::Sale vendor_id field
     end
 
     def product
+      all_products = FarMar::Product.all
+      answer = nil
+      all_products.each do |product|
+        answer = product if product.id == @product_id
+      end
+      raise ArgumentError.new "no product found" if answer == nil
+      return answer
       #returns the FarMar::Product instance that is associated with this sale using the FarMar::Sale product_id field
     end
 
     def self.between(beginning_time, end_time)
       #returns a collection of FarMar::Sale objects where the purchase time is between the two times given as arguments
+      beginning_time = DateTime.parse(beginning_time)
+      end_time = DateTime.parse(end_time)
+      raise ArgumentError.new "must input dates as args" if beginning_time.class != DateTime && end_time.class != DateTime
+
+      all_sales = FarMar::Sale.all
+      sales_between = []
+      all_sales.each do |sale|
+        sales_between << sale if sale.purchase_time.between?(beginning_time, end_time)
+      end
+
     end
 
     def self.all
@@ -35,7 +60,7 @@ module FarMar
         sale_hash = {}
         sale_hash[:id] = line[0]
         sale_hash[:amount] = line[1]
-        sale_hash[:purchase_time] = line[2]
+        sale_hash[:purchase_time] = DateTime.parse(line[2])
         sale_hash[:vendor_id] = line[3]
         sale_hash[:product_id] = line[4]
 
